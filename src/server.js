@@ -1,13 +1,12 @@
 import initApp from "./app.js";
-import { connectDB } from "./config/database.js";
 import environment from "./config/environment.js";
-import { redisClient, connectRedis } from "./config/redis.js";
-import { logger } from "./config/winston.js";
+import "./lib/database.js";
+import redisClient from "./lib/redis.js";
+import { logger } from "./lib/winston.js";
 
 const startServer = async () => {
     try {
-        await connectDB();
-        await connectRedis();
+        await redisClient.connect();
         const app = await initApp();
         app.listen(environment.backend.port, () => logger.info(`✅ Listening on port ${environment.backend.port}`));
     } catch (error) {

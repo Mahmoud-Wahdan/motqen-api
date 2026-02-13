@@ -4,9 +4,9 @@ import helmet from "helmet";
 import cors from "cors";
 import mainRouter from "./routes/api.js";
 import { errorHandler } from "./middlewares/errorHandlerMiddleware.js";
-import mongoose from "mongoose";
-import { redisClient } from "./config/redis.js";
+import redisClient from "./lib/redis.js";
 import environment from "./config/environment.js";
+import prisma from "./lib/database.js";
 
 const initApp = async () => {
     const app = express();
@@ -31,7 +31,7 @@ const initApp = async () => {
         res.status(200).json({
             status: 'OK',
             timestamp: new Date(),
-            database: mongoose.connection.readyState ? "connected" : "disconnected",
+            database: prisma ? "connected" : "disconnected",
             redis: redisClient.isReady ? "connected" : "disconnected",
         });
     });
