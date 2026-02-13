@@ -6,7 +6,7 @@ import mainRouter from "./routes/api.js";
 import { errorHandler } from "./middlewares/errorHandlerMiddleware.js";
 import redisClient from "./lib/redis.js";
 import environment from "./config/environment.js";
-import prisma from "./lib/database.js";
+import  prismaClient  from "./lib/database.js";
 
 const initApp = async () => {
   const app = express();
@@ -35,23 +35,17 @@ const initApp = async () => {
     res.status(200).json({
       status: "OK",
       timestamp: new Date(),
-      database: prisma ? "connected" : "disconnected",
+      database: prismaClient ? "connected" : "disconnected",
       redis: redisClient.isReady ? "connected" : "disconnected",
     });
   });
 
   app.use(errorHandler);
 
-  app.use((req, res, next) => {
+  app.use((_, res) => {
     res.status(404).json({ error: "Route not found" });
   });
 
-  prisma
-    .$connect()
-    .then(() => console.log("Connected to PostgreSQL database"))
-    .catch((err) =>
-      console.error("Error connecting to PostgreSQL database:", err),
-    );
 
 
   return app;

@@ -25,6 +25,7 @@
         "winston": "^3.19.0"
     },
     "devDependencies": {
+        "globals": "^17.3.0",
         "prisma": "^7.4.0"
     }
 }

@@ -1,13 +1,15 @@
-import { PrismaClient } from "./prisma/client/client.ts";
+import { PrismaClient } from "./prisma/client/client.js";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+import environment from "../config/environment.js";
 
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, 
-  },
+    connectionString: environment.database.url,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 const adapter = new PrismaPg(pool);
+const prismaClient = new PrismaClient({ adapter });
 
-export default new PrismaClient({ adapter });
+export default prismaClient;

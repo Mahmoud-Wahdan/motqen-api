@@ -1,7 +1,7 @@
-node_modules/
+node_modules
 .env
 
-./src/logs/
+logs
 
-/src/lib/prisma
+src/lib/prisma
 prisma/migrations

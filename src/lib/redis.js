@@ -4,8 +4,8 @@ import { logger } from "./winston.js";
 
 const redisClient = redis.createClient(environment.redis.url);
 
-redisClient.on("error", (err) => logger.error("❌ Redis Client Error", err));
-redisClient.on("connect", () => logger.info("✅ Redis Client Connected"));
+redisClient.on("error", (err) => logger.error("❌ Redis client error", err));
+redisClient.on("connect", () => logger.info("✅ Redis client connected"));
 redisClient.on('disconnected', () => logger.error('❌ Redis disconnected'));
 
 
